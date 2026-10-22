@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Snapeo Studios | Wedding Photography & Films</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Hanken+Grotesk:wght@300;400;500&family=Italiana&display=swap">
+<link rel="preconnect" href="https://lh3.googleusercontent.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Hanken+Grotesk:wght@300;400;500&family=Italiana&display=swap">
 <script>
 /* ================= EDIT HERE: PASTE YOUR LINKS ONLY =================
  Photos: any direct image URL, or a Google Drive share link (file set to "Anyone with the link").
@@ -12,6 +12,7 @@ const SNAPEO={
  tagline:"Wedding photography & films", email:"hello@snapeo.studio", instagram:"https://instagram.com/", phone:"+91 70178 89843", whatsapp:"917017889843",
  aboutText:["We limit weddings each season so every couple receives our best work. Photography and film come from one calm, small team.","Our approach is simple: be present, stay quiet and let the day unfold. Replace this text with your own story."],
  heroNote:"Now booking weddings worldwide",   // small line under the buttons: edit or leave "" to hide
+ imageTemplate:"",   // OPTIONAL CDN: e.g. "https://res.cloudinary.com/YOURNAME/image/fetch/w_{w},f_auto,q_auto/{esc}" or "https://YOURSOURCE.imgix.net/{src}?w={w}&auto=format,compress". Leave "" for normal links.
  heroBgMobile:"https://drive.google.com/file/d/1t518Z7uRhU9Kw8UbFz1-rzW1LPPSeO1l/view",   // hero photo on phones (a tall photo of the couple works best)
  heroBg:"https://drive.google.com/file/d/1QmKJ3v-JPTd4FtjBy7IwebDY1kNPImaJ/view",   // full-screen background behind the top of the home page, nav bar included
  hero:["https://drive.google.com/file/d/1yad5uppXKRdsU7_yk9Ch0nfC5_ZHpFtv/view", "https://drive.google.com/file/d/1t518Z7uRhU9Kw8UbFz1-rzW1LPPSeO1l/view", "https://drive.google.com/file/d/1dZSSAoTA_r9Jy5e0tggCG9f49Xhsc0R2/view"],                 // 3 arch photos at the top
@@ -278,8 +279,9 @@ body:not(.ready) .hero h1,body:not(.ready) .hero p,body:not(.ready) .hero .cta2,
 <div id="lb"><button id="lx">Close</button><div id="lbc"></div></div>
 <script>
 const RQ=[],S=SNAPEO,wa=t=>`https://wa.me/${S.whatsapp}?text=${encodeURIComponent(t)}`,$=s=>document.querySelector(s),H=[350,100,210,50,280,20,160];
-const url=u=>{if(!u)return"";const m=u.match(/drive\.google\.com.*?(?:\/d\/|id=)([\w-]+)/);return m?`https://lh3.googleusercontent.com/d/${m[1]}=w1800`:u};
-const ph=(u,i,t,x="",st="")=>{u=url(u);return`<div class="ph ${x}" style="--h:${H[i%7]};${st}">${u?`<img loading="lazy" alt="${t}" src="${u}" onload="this.classList.add('l')" onerror="this.remove()">`:""}<em class="wm"><b>SNAPEO</b><small>STUDIOS</small></em></div>`};
+const W0=()=>innerWidth<700?640:900;
+const url=(u,w)=>{if(!u)return"";w=w||W0();const T=S.imageTemplate;if(T)return T.replace("{w}",w).replace("{src}",u).replace("{esc}",encodeURIComponent(u));const m=u.match(/drive\.google\.com.*?(?:\/d\/|id=)([\w-]+)/);return m?`https://lh3.googleusercontent.com/d/${m[1]}=w${w}`:u};
+const ph=(u,i,t,x="",st="",w,pr)=>{u=url(u,w);return`<div class="ph ${x}" style="--h:${H[i%7]};${st}">${u?`<img ${pr?'loading="eager" fetchpriority="high"':'loading="lazy"'} decoding="async" alt="${t}" src="${u}" onload="this.classList.add('l')" onerror="this.remove()">`:""}<em class="wm"><b>SNAPEO</b><small>STUDIOS</small></em></div>`};
 const emb=u=>{let m;if(m=u.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/))return`<iframe allow="autoplay;fullscreen" allowfullscreen src="https://www.youtube.com/embed/${m[1]}?autoplay=1"></iframe>`;
 if(m=u.match(/vimeo\.com\/(\d+)/))return`<iframe allow="autoplay;fullscreen" allowfullscreen src="https://player.vimeo.com/video/${m[1]}?autoplay=1"></iframe>`;
 if(m=u.match(/drive\.google\.com.*?\/d\/([\w-]+)/))return`<iframe allow="autoplay" allowfullscreen src="https://drive.google.com/file/d/${m[1]}/preview"></iframe>`;
@@ -289,7 +291,7 @@ const Wf=f=>`<svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none"
 const T=t=>`<h1 style="font-size:clamp(2.6rem,7vw,6rem)">${t}</h1>`;
 const play=(v)=>v?`data-v="${v}"`:"";
 const V={
-home:()=>`<section class="hero"><div class="hbg"><div class="hd">${ph(S.heroBg,3,"Hero background")}</div><div class="hm">${ph(S.heroBgMobile||S.heroBg,3,"Hero background")}</div></div><div class="wrap"><div><h1>Soft light,<br><em>lasting</em> love</h1><p>Wedding photography and films for couples who want their day remembered the way it felt.</p><div class="cta2"><a class="btn solid" href="#contact">Check your date</a><a class="btn" href="#portfolio">View portfolio</a></div><small class="note">${S.heroNote}</small></div><div class="arches">${[0,1,2].map(i=>ph(S.hero[i],i,"Hero photo","arch rv")).join("")}</div></div></section>${W("#dde6d9").replace("<svg","<svg style='margin-top:-1px;transform:scaleY(-1)'")}
+home:()=>`<section class="hero"><div class="hbg">${innerWidth>860?`<div class="hd">${ph(S.heroBg,3,"Hero background","","",1600,1)}</div>`:`<div class="hm">${ph(S.heroBgMobile||S.heroBg,3,"Hero background","","",1000,1)}</div>`}</div><div class="wrap"><div><h1>Soft light,<br><em>lasting</em> love</h1><p>Wedding photography and films for couples who want their day remembered the way it felt.</p><div class="cta2"><a class="btn solid" href="#contact">Check your date</a><a class="btn" href="#portfolio">View portfolio</a></div><small class="note">${S.heroNote}</small></div><div class="arches">${innerWidth>860?[0,1,2].map(i=>ph(S.hero[i],i,"Hero photo","arch rv","",700,1)).join(""):""}</div></div></section>${W("#dde6d9").replace("<svg","<svg style='margin-top:-1px;transform:scaleY(-1)'")}
 <section class="intro"><div class="wrap sec" style="padding-block:60px 90px"><div>${ph(S.intro.portrait,1,"Portrait","rv")}</div><div class="c"><h2>A gentle approach to an <em>age-old</em> tradition</h2><p style="margin-top:24px">Snapeo Studios photographs weddings in natural light with calm direction. We shoot photography and film together so one quiet team covers every ritual, every glance and every in-between moment.</p><a class="btn" href="#about">Our approach</a></div>${ph(S.intro.wide,3,"Wide photo","rv")}</div></section>${W("#dde6d9")}
 <div class="mq"><div>${[...S.press,...S.press,...S.press,...S.press].map(p=>`<span>${p}</span>`).join("")}</div></div>
 <section class="sec"><h2 class="c" style="margin-bottom:50px">Frames we love</h2><div class="mos">${Array.from({length:14},(_,i)=>i==6?`<div class="t"><b>some of our most loved frames</b></div>`:ph(S.mosaic[i>6?i-1:i],i,"Photo","rv")).join("")}</div></section>
@@ -318,7 +320,7 @@ const app=$("#app"),nv=$("#nv"),lb=$("#lb");$("#lg").innerHTML=S.logo?`<img src=
 $("#ft").innerHTML=`<div><div class="logo" style="font-size:1.3rem">${S.brand} STUDIOS</div><p style="margin-top:10px">Wedding photography and films, India and destinations.</p></div><div>${S.email}<br><a href="${S.instagram}">Instagram</a><br><a href="${wa("Hi Snapeo!")}">WhatsApp ${S.phone}</a></div><div>© 2026 Snapeo Studios</div>`;
 const open=h=>{$("#lbc").innerHTML=h;lb.classList.add("o")};
 function grid(f){const g=$("#gr");g.innerHTML=S.portfolio.map((p,i)=>[p,i]).filter(([p])=>f=="All"||p.cat==p.cat&&p.cat==f).map(([p,i])=>ph(p.src,i,p.title,"",`aspect-ratio:${i%3==1?"1/1.25":i%3?"4/5":"3/4"}`).replace('class="ph ',`data-i="${i}" class="ph `)).join("");
-g.querySelectorAll(".ph").forEach(e=>e.onclick=()=>{const p=S.portfolio[e.dataset.i];open(p.src?`<div class="ph" style="--h:30"><img alt="${p.title}" src="${url(p.src)}" onload="this.classList.add('l')" onerror="this.remove()"></div>`:`<div class="ph" style="--h:${H[e.dataset.i%7]}"><span>${p.title}</span></div>`)})}
+g.querySelectorAll(".ph").forEach(e=>e.onclick=()=>{const p=S.portfolio[e.dataset.i];open(p.src?`<div class="ph" style="--h:30"><img alt="${p.title}" src="${url(p.src,1600)}" onload="this.classList.add('l')" onerror="this.remove()"></div>`:`<div class="ph" style="--h:${H[e.dataset.i%7]}"><span>${p.title}</span></div>`)})}
 function route(){const r=V[location.hash.slice(1)]?location.hash.slice(1):"home";app.innerHTML=V[r]();app.style.animation="none";app.offsetHeight;app.style.animation="";scrollTo(0,0);menu(false);
 document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")=="#"+r));document.title=(r=="home"?"":r[0].toUpperCase()+r.slice(1)+" | ")+"Snapeo Studios";
 if(r=="portfolio")grid("All");
