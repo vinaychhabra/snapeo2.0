@@ -8,7 +8,8 @@
  Photos: any direct image URL, or a Google Drive share link (file set to "Anyone with the link").
  Videos: YouTube, Vimeo, Drive video link, or .mp4 URL. Leave "" to keep a soft placeholder. */
 const SNAPEO={
- brand:"SNAPEO", email:"hello@snapeo.studio", instagram:"https://instagram.com/", phone:"+91 70178 89843", whatsapp:"917017889843",
+ brand:"SNAPEO", logo:"",   // paste your logo link here (transparent PNG/SVG works best); used in the intro animation and the menu bar
+ tagline:"Wedding photography & films", email:"hello@snapeo.studio", instagram:"https://instagram.com/", phone:"+91 70178 89843", whatsapp:"917017889843",
  aboutText:["We limit weddings each season so every couple receives our best work. Photography and film come from one calm, small team.","Our approach is simple: be present, stay quiet and let the day unfold. Replace this text with your own story."],
  heroNote:"Now booking weddings worldwide",   // small line under the buttons: edit or leave "" to hide
  heroBg:"https://drive.google.com/file/d/1QmKJ3v-JPTd4FtjBy7IwebDY1kNPImaJ/view",   // full-screen background behind the top of the home page, nav bar included
@@ -191,16 +192,55 @@ header,header.s{display:grid;grid-template-columns:44px 1fr 44px;align-items:cen
 .burger.o i:first-child{transform:translateY(4.5px) rotate(45deg)}.burger.o i:last-child{width:26px;transform:translateY(-4.5px) rotate(-45deg)}
 nav{padding-top:60px}
 }
-</style></head><body>
+/* PRELOADER */
+body.loading{overflow:hidden}
+#pre{position:fixed;inset:0;z-index:100;display:grid;place-items:center;text-align:center;background:linear-gradient(180deg,var(--blush),var(--bg) 70%);overflow:hidden;transition:transform 1.25s cubic-bezier(.77,0,.18,1),border-radius 1.25s cubic-bezier(.77,0,.18,1);border-radius:0}
+#pre.out{transform:translateY(-104%);border-radius:0 0 50% 50%/0 0 14vh 14vh}
+#pre .orb{z-index:0}#pre .o1{left:-60px;bottom:-60px;width:320px;height:320px}#pre .o2{right:-40px;top:-40px;width:260px;height:260px}
+.pre-in{position:relative;z-index:1;transition:opacity .6s,transform 1s}#pre.out .pre-in{opacity:0;transform:translateY(-30px)}
+.pre-mark{display:flex;justify-content:center;font:400 clamp(2.8rem,10vw,5.6rem)/1.15 'Italiana',var(--serif);letter-spacing:.3em;padding-left:.3em}
+.pre-mark span{display:block;overflow:hidden;padding-bottom:.08em}.pre-mark b{display:block;font-weight:400;transform:translateY(115%);animation:pl 1.1s calc(.25s + var(--i)*.09s) cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes pl{to{transform:none}}
+.pre-mark.lg{padding:0;position:relative;overflow:hidden}.pre-mark.lg img{height:clamp(70px,16vw,120px);width:auto;max-width:78vw;display:block;clip-path:inset(0 100% 0 0);filter:blur(10px);transform:scale(1.08);animation:lgi 1.7s .25s cubic-bezier(.2,.7,.2,1) forwards}
+.pre-mark.lg::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.85) 50%,transparent 65%);transform:translateX(-120%);animation:shn 1.3s 1.7s ease-in-out forwards}
+@keyframes lgi{to{clip-path:inset(0 0 0 0);filter:blur(0);transform:none}}@keyframes shn{to{transform:translateX(120%)}}
+.pre-sub{margin-top:16px;padding-left:.9em;font:300 .78rem var(--sans);text-transform:uppercase;color:var(--rose);opacity:0;animation:sub 1.3s 1.2s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes sub{from{opacity:0;letter-spacing:1.4em}to{opacity:1;letter-spacing:.9em}}
+.pre-line{display:block;height:1px;width:0;background:var(--rose);margin:26px auto 0;animation:ln 1.4s 1.5s cubic-bezier(.2,.7,.2,1) forwards}@keyframes ln{to{width:min(220px,46vw)}}
+#sp{position:fixed;top:0;left:0;right:0;height:2px;background:var(--rose);transform-origin:left;transform:scaleX(0);z-index:50;pointer-events:none}
+body:not(.ready) .hero h1,body:not(.ready) .hero p,body:not(.ready) .hero .cta2,body:not(.ready) .hero .note{animation-play-state:paused}
+.hero .cta2,.hero .note{animation:rise 1.5s .9s both cubic-bezier(.2,.7,.2,1)}
+/* IMAGE PLACEHOLDERS: pastel shows first, photo fades in */
+.ph img{opacity:0;transition:opacity 1.1s ease,transform 1.5s cubic-bezier(.2,.7,.2,1)}.ph img.l{opacity:1}
+.ph:has(img:not(.l))::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.6) 50%,transparent 70%);transform:translateX(-100%);animation:shm 1.8s infinite}
+@keyframes shm{to{transform:translateX(100%)}}
+.btn.up{transition:opacity 1s var(--d,0s),transform 1.2s var(--d,0s) cubic-bezier(.2,.7,.2,1),background .4s,color .4s}
+.up.v{transition-delay:0s}
+/* TEXT OVER IMAGES: readable scrims */
+.wd .nm{inset:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:0 16px 28px;background:linear-gradient(180deg,rgba(35,24,30,0) 30%,rgba(35,24,30,.66));text-shadow:0 2px 18px rgba(0,0,0,.45);font-size:clamp(1.7rem,3.4vw,2.8rem)}
+.wd .ph{transition:transform .8s cubic-bezier(.2,.7,.2,1)}.wd>div:hover .ph{transform:translateY(-6px)}
+.pl i{background:rgba(35,24,30,.32)}
+.cin::after{background:radial-gradient(75% 75% at 50% 50%,rgba(35,24,30,.58),rgba(35,24,30,.3))}
+.cin h2{color:#fff;text-shadow:0 2px 30px rgba(0,0,0,.35)}.cin p{color:rgba(255,255,255,.94)}
+.cin .btn{color:#fff!important;border-color:#fff!important;background:rgba(255,255,255,.1)}.cin .btn:hover{background:#fff;color:var(--ink)!important}
+.ctab::after{background:rgba(35,24,30,.14)}
+.ctab>div{background:rgba(251,245,241,.84);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:clamp(30px,5vw,56px) clamp(24px,5vw,64px);border-radius:34px;margin:20px;max-width:640px;box-shadow:0 40px 80px -40px rgba(35,24,30,.5)}
+.ctab h2,.ctab p{color:var(--ink)}.ctab p{opacity:.85}
+.pre-mark b{will-change:transform}
+@media(prefers-reduced-motion:reduce){#pre{display:none}}
+.pre-sub.t{padding-left:.3em;font-size:.7rem;animation-name:subt}@keyframes subt{from{opacity:0;letter-spacing:.9em}to{opacity:1;letter-spacing:.32em}}
+.logo img{height:36px;width:auto;display:block}
+</style></head><body class="loading"><i id="sp"></i>
+<div id="pre" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><div class="pre-in"><div class="pre-mark" id="pm"></div><div class="pre-sub" id="ps"></div><i class="pre-line"></i></div></div>
 <header id="hd"><a class="logo" href="#home" id="lg"></a><button class="burger" id="bg" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
 <nav id="nv"><a href="#home">Home</a><a href="#portfolio">Portfolio</a><a href="#films">Films</a><a href="#experience">Experience</a><a href="#about">About</a><a class="cta" href="#contact">Enquire</a></nav></header>
 <main id="app"></main>
 <footer id="ft"></footer>
 <div id="lb"><button id="lx">Close</button><div id="lbc"></div></div>
 <script>
-const S=SNAPEO,wa=t=>`https://wa.me/${S.whatsapp}?text=${encodeURIComponent(t)}`,$=s=>document.querySelector(s),H=[350,100,210,50,280,20,160];
+const RQ=[],S=SNAPEO,wa=t=>`https://wa.me/${S.whatsapp}?text=${encodeURIComponent(t)}`,$=s=>document.querySelector(s),H=[350,100,210,50,280,20,160];
 const url=u=>{if(!u)return"";const m=u.match(/drive\.google\.com.*?(?:\/d\/|id=)([\w-]+)/);return m?`https://lh3.googleusercontent.com/d/${m[1]}=w1800`:u};
-const ph=(u,i,t,x="",st="")=>{u=url(u);return`<div class="ph ${x}" style="--h:${H[i%7]};${st}">${u?`<img loading="lazy" alt="${t}" src="${u}" onerror="this.remove()">`:`<span>${t}</span>`}</div>`};
+const ph=(u,i,t,x="",st="")=>{u=url(u);return`<div class="ph ${x}" style="--h:${H[i%7]};${st}">${u?`<img loading="lazy" alt="${t}" src="${u}" onload="this.classList.add('l')" onerror="this.remove()">`:`<span>${t}</span>`}</div>`};
 const emb=u=>{let m;if(m=u.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/))return`<iframe allow="autoplay;fullscreen" allowfullscreen src="https://www.youtube.com/embed/${m[1]}?autoplay=1"></iframe>`;
 if(m=u.match(/vimeo\.com\/(\d+)/))return`<iframe allow="autoplay;fullscreen" allowfullscreen src="https://player.vimeo.com/video/${m[1]}?autoplay=1"></iframe>`;
 if(m=u.match(/drive\.google\.com.*?\/d\/([\w-]+)/))return`<iframe allow="autoplay" allowfullscreen src="https://drive.google.com/file/d/${m[1]}/preview"></iframe>`;
@@ -217,7 +257,7 @@ home:()=>`<section class="hero"><div class="hbg">${ph(S.heroBg,3,"Hero backgroun
 <section class="wrap" style="padding-bottom:110px"><div class="sto">${S.stories.map((s,i)=>`<a href="#portfolio"><div>${ph(s.img,i,s.title,"rv")}</div><h3>${s.title}</h3><small>${s.date}</small></a>`).join("")}</div><div class="c"><a class="btn" href="#portfolio">Photography blog</a></div></section>
 <section class="cin">${ph(S.cinema.img,4,"Cinematic still","","")}<div><h2>Soul <em>&</em> Cinema</h2><p>Every wedding is unique and so are our films. We tell your story with real sound, real faces and the pace of your day.</p>${S.cinema.video?`<a class="btn" style="color:var(--ink);border-color:var(--ink)" href="#" data-v="${S.cinema.video}">Watch showreel</a>`:`<a class="btn" style="color:var(--ink);border-color:var(--ink)" href="#films">See our films</a>`}</div></section>
 <section class="aw sec wrap c" style="margin-top:-60px;padding-top:150px"><h2>Award-winning films</h2><div class="lau">${S.awards.map(a=>`<div>${a.t}<small>${a.s}</small></div>`).join("")}</div><div class="two" style="text-align:left">${S.films.map((f,i)=>`<div class="fm" ${play(f.video)}>${ph(f.thumb,i+2,"Film still").replace("</div>",`<div class="pl"><i></i></div></div>`)}<h3>${f.title}</h3><small style="color:var(--mute)">${f.place}</small></div>`).join("")}</div><a class="btn" href="#films">Watch all our films</a></section>
-<section class="sec wrap c"><h2>Selected weddings</h2><p>A few recent celebrations, from intimate ceremonies to week-long destination weddings.</p><div class="wd">${S.weddings.map((w,i)=>`<div ${play(w.video)} style="cursor:pointer">${ph(w.thumb,i,w.title).replace("</div>",`<div class="nm">${w.title}<br><small style="font:300 .8rem var(--sans);letter-spacing:.12em">${w.place}</small></div></div>`)}</div>`).join("")}</div></section>
+<section class="sec wrap c"><h2>Selected weddings</h2><p>A few recent celebrations, from intimate ceremonies to week-long destination weddings.</p><div class="wd">${S.weddings.map((w,i)=>`<div ${play(w.video)} style="cursor:pointer">${ph(w.thumb,i,w.title).replace("</div>",`<div class="nm"><span>${w.title}</span><small style="font:400 .74rem var(--sans);letter-spacing:.18em;text-transform:uppercase;margin-top:8px">${w.place}</small></div></div>`)}</div>`).join("")}</div></section>
 <section class="pr sec wrap c"><h2>As seen in</h2><p style="margin-top:14px">${S.press.join("  ·  ")}</p></section>
 <section class="ctab">${ph(S.cta,6,"Closing photograph")}<div><h2>Your day, <em>beautifully</em> kept</h2><p style="margin:20px auto;color:var(--ink)">Tell us your date and we will tell you if we are free.</p><a class="btn" href="#contact">Enquire now</a></div></section>`,
 portfolio:()=>`<section class="sec wrap" style="padding-top:170px;background:linear-gradient(var(--blush),var(--bg) 40%)">${T("Portfolio")}<div class="filters">${["All","Wedding","Pre-wedding","Editorial"].map((f,i)=>`<button class="${i?"":"on"}" data-f="${f}">${f}</button>`).join("")}</div><div class="grid" id="gr"></div></section>`,
@@ -234,24 +274,33 @@ contact:()=>{const m=S.mosaic,I=(d)=>`<span class="ic"><svg width="20" height="2
 <div class="fc up" style="--d:.15s"><form id="fm"><div class="row2"><label>Your names<input required name="n" autocomplete="name" placeholder="Aanya & Kabir"></label><label>Phone number<input name="p" type="tel" autocomplete="tel" placeholder="+91"></label></div><div class="row2"><label>Wedding date<input name="d" type="date"></label><label>City or venue<input name="c" placeholder="Udaipur"></label></div><label>What are you looking for?<div class="chips">${["Photography","Films","Albums","Destination wedding","Pre-wedding"].map(x=>`<label class="chip"><input type="checkbox" name="sv" value="${x}"><span>${x}</span></label>`).join("")}</div></label><label>Tell us about the celebration<textarea rows="4" name="m" placeholder="Events, guests, mood you love"></textarea></label><button class="btn solid" style="justify-self:start;margin:0">Send on WhatsApp</button><small class="fine">This opens WhatsApp with your details filled in. Prefer email? <a href="#" id="em" style="text-decoration:underline">Send by email</a></small><div class="okm" id="ok">Thank you. WhatsApp should now be open. If it did not open, message us on ${S.phone}.</div></form></div></div></section>
 <section class="sec wrap faq"><h2 class="c up" style="margin-bottom:34px">Good to know</h2><div style="max-width:760px;margin:auto">${[["How early should we get in touch?","As soon as you have a date or a shortlist of dates. Popular dates are taken first."],["Do you travel for weddings?","Yes. We shoot across India and abroad and handle our own logistics."],["Can we book photography and film together?","Yes, and most couples do. One team covers both, so the day feels calmer."],["How do prices work?","Every wedding is quoted individually based on days, events and deliverables. Message us and we will share details."]].map(f=>`<details class="up"><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join("")}</div></section>`}
 };
-const app=$("#app"),nv=$("#nv"),lb=$("#lb");$("#lg").textContent=S.brand;
+const app=$("#app"),nv=$("#nv"),lb=$("#lb");$("#lg").innerHTML=S.logo?`<img src="${url(S.logo)}" alt="Snapeo Studios">`:S.brand;
 $("#ft").innerHTML=`<div><div class="logo" style="font-size:1.3rem">${S.brand} STUDIOS</div><p style="margin-top:10px">Wedding photography and films, India and destinations.</p></div><div>${S.email}<br><a href="${S.instagram}">Instagram</a><br><a href="${wa("Hi Snapeo!")}">WhatsApp ${S.phone}</a></div><div>© 2026 Snapeo Studios</div>`;
 const open=h=>{$("#lbc").innerHTML=h;lb.classList.add("o")};
 function grid(f){const g=$("#gr");g.innerHTML=S.portfolio.map((p,i)=>[p,i]).filter(([p])=>f=="All"||p.cat==p.cat&&p.cat==f).map(([p,i])=>ph(p.src,i,p.title,"",`aspect-ratio:${i%3==1?"1/1.25":i%3?"4/5":"3/4"}`).replace('class="ph ',`data-i="${i}" class="ph `)).join("");
-g.querySelectorAll(".ph").forEach(e=>e.onclick=()=>{const p=S.portfolio[e.dataset.i];open(p.src?`<div class="ph" style="--h:30"><img alt="${p.title}" src="${url(p.src)}" onerror="this.remove()"></div>`:`<div class="ph" style="--h:${H[e.dataset.i%7]}"><span>${p.title}</span></div>`)})}
+g.querySelectorAll(".ph").forEach(e=>e.onclick=()=>{const p=S.portfolio[e.dataset.i];open(p.src?`<div class="ph" style="--h:30"><img alt="${p.title}" src="${url(p.src)}" onload="this.classList.add('l')" onerror="this.remove()"></div>`:`<div class="ph" style="--h:${H[e.dataset.i%7]}"><span>${p.title}</span></div>`)})}
 function route(){const r=V[location.hash.slice(1)]?location.hash.slice(1):"home";app.innerHTML=V[r]();app.style.animation="none";app.offsetHeight;app.style.animation="";scrollTo(0,0);menu(false);
 document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("on",a.getAttribute("href")=="#"+r));document.title=(r=="home"?"":r[0].toUpperCase()+r.slice(1)+" | ")+"Snapeo Studios";
 if(r=="portfolio")grid("All");
 const fm=$("#fm");if(fm){const msg=()=>{const d=new FormData(fm);return`Hi Snapeo! I'm ${d.get("n")}.\nWedding date: ${d.get("d")||"to be decided"}\nCity/venue: ${d.get("c")||"-"}\nLooking for: ${d.getAll("sv").join(", ")||"-"}\nPhone: ${d.get("p")||"-"}\n\n${d.get("m")||""}`};fm.onsubmit=e=>{e.preventDefault();$("#ok").classList.add("on");window.open(wa(msg()),"_blank")};$("#em").onclick=e=>{e.preventDefault();location.href=`mailto:${S.email}?subject=`+encodeURIComponent("Wedding enquiry")+"&body="+encodeURIComponent(msg())}}
 document.querySelectorAll(".filters button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".filters button").forEach(x=>x.classList.toggle("on",x==b));grid(b.dataset.f)});
 document.querySelectorAll("[data-v]").forEach(e=>e.onclick=ev=>{ev.preventDefault();open(emb(e.dataset.v))});
-const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&(x.target.classList.add("v"),io.unobserve(x.target))),{threshold:.12});document.querySelectorAll(".rv,.up").forEach(e=>io.observe(e))}
+const io=new IntersectionObserver(es=>es.forEach(x=>x.isIntersecting&&(x.target.classList.add("v"),io.unobserve(x.target))),{threshold:.12});app.querySelectorAll("h1,h2,h3,section p,.btn,.ph,.lau div,.rows>div,.sto a,.wd>div,.fm,.mq,.faq details,.apr>div,.proc>div").forEach((e,i)=>{if(e.closest(".hero,.hbg,.ab-h,.up,.rv")||e.classList.contains("up")||e.classList.contains("rv"))return;e.classList.add("up");e.style.setProperty("--d",(i%4)*.09+"s")});
+app.querySelectorAll(".ph img").forEach(i=>i.complete&&i.naturalWidth&&i.classList.add("l"));
+const go=()=>document.querySelectorAll(".rv,.up").forEach(e=>io.observe(e));document.body.classList.contains("loading")?RQ.push(go):go()}
 lb.onclick=e=>{if(e.target==lb||e.target.id=="lx"){lb.classList.remove("o");$("#lbc").innerHTML=""}};
 addEventListener("keydown",e=>e.key=="Escape"&&lb.onclick({target:lb}));
 function menu(f){nv.classList.toggle("o",f);$("#bg").classList.toggle("o",f);$("#bg").setAttribute("aria-expanded",f);$("#bg").setAttribute("aria-label",f?"Close menu":"Open menu");document.body.style.overflow=f?"hidden":""}
 $("#bg").onclick=()=>menu(!nv.classList.contains("o"));
-addEventListener("scroll",()=>{$("#hd").classList.toggle("s",scrollY>60);const c=document.querySelector(".cin .ph");if(c)c.style.transform=`translateY(${(scrollY-c.parentElement.offsetTop)*.12}px)`},{passive:true});
+addEventListener("scroll",()=>{$("#hd").classList.toggle("s",scrollY>60);$("#sp").style.transform=`scaleX(${scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)})`;const c=document.querySelector(".cin .ph");if(c)c.style.transform=`translateY(${(scrollY-c.parentElement.offsetTop)*.12}px)`},{passive:true});
 const wd=document.createElement("div");wd.className="wa";wd.innerHTML=`<div class="wac" role="dialog" aria-label="Chat on WhatsApp"><div class="wah"><span class="wav">S</span><div><b style="font-weight:400">Snapeo Studios</b><small style="display:block;color:var(--mute)">Chat with us on WhatsApp</small></div></div><div class="wam"><p>Hi there! Tell us your wedding date and city, and we will get back to you personally.</p></div><form class="waf"><input id="wat" placeholder="Type your message" aria-label="Message"><button aria-label="Send"><svg viewBox="0 0 32 32" width="18" height="18" fill="#fff"><path d="M16.04 3C9.4 3 4 8.4 4 15.04c0 2.12.55 4.18 1.6 6L4 28l7.1-1.86a12 12 0 0 0 4.94 1.06C22.68 27.2 28 21.8 28 15.16 28 8.5 22.68 3 16.04 3zm0 21.9c-1.8 0-3.56-.5-5.1-1.4l-.36-.22-4.2 1.1 1.12-4.1-.24-.38a9.7 9.7 0 0 1-1.5-5.2c0-5.4 4.4-9.8 9.8-9.8 5.4 0 9.8 4.4 9.8 9.8s-4.4 9.8-9.8 9.8zm5.4-7.3c-.3-.15-1.75-.87-2.02-.97-.27-.1-.47-.15-.67.15s-.77.97-.94 1.17c-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.6.14-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5s1.07 2.9 1.22 3.1c.15.2 2.1 3.2 5.08 4.5.7.3 1.26.5 1.7.62.72.23 1.37.2 1.88.12.58-.08 1.75-.72 2-1.4.24-.7.24-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/></svg></button></form></div><button class="wab" aria-label="Chat on WhatsApp"><svg viewBox="0 0 32 32" width="30" height="30" fill="#fff"><path d="M16.04 3C9.4 3 4 8.4 4 15.04c0 2.12.55 4.18 1.6 6L4 28l7.1-1.86a12 12 0 0 0 4.94 1.06C22.68 27.2 28 21.8 28 15.16 28 8.5 22.68 3 16.04 3zm0 21.9c-1.8 0-3.56-.5-5.1-1.4l-.36-.22-4.2 1.1 1.12-4.1-.24-.38a9.7 9.7 0 0 1-1.5-5.2c0-5.4 4.4-9.8 9.8-9.8 5.4 0 9.8 4.4 9.8 9.8s-4.4 9.8-9.8 9.8zm5.4-7.3c-.3-.15-1.75-.87-2.02-.97-.27-.1-.47-.15-.67.15s-.77.97-.94 1.17c-.17.2-.35.22-.64.07-.3-.15-1.25-.46-2.38-1.47-.88-.78-1.47-1.75-1.65-2.05-.17-.3-.02-.46.13-.6.14-.13.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.6-.92-2.2-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.5s1.07 2.9 1.22 3.1c.15.2 2.1 3.2 5.08 4.5.7.3 1.26.5 1.7.62.72.23 1.37.2 1.88.12.58-.08 1.75-.72 2-1.4.24-.7.24-1.3.17-1.42-.07-.12-.27-.2-.57-.35z"/></svg></button>`;document.body.appendChild(wd);wd.querySelector(".wab").onclick=()=>wd.classList.toggle("o");wd.querySelector(".waf").onsubmit=e=>{e.preventDefault();window.open(wa($("#wat").value||"Hi Snapeo! I would like to enquire about my wedding."),"_blank")};
 addEventListener("hashchange",()=>wd.classList.remove("o"));
 addEventListener("hashchange",route);route();
+(function(){const pre=$("#pre"),B=document.body;let seen=0;try{seen=sessionStorage.getItem("sn_seen")}catch(e){}
+const fin=()=>{pre.classList.add("out");B.classList.remove("loading");B.classList.add("ready");try{sessionStorage.setItem("sn_seen","1")}catch(e){}setTimeout(()=>{RQ.splice(0).forEach(f=>f());},500);setTimeout(()=>pre.remove(),1500)};
+if(seen||matchMedia("(prefers-reduced-motion:reduce)").matches){pre.remove();B.classList.remove("loading");B.classList.add("ready");RQ.splice(0).forEach(f=>f());return}
+const pm=$("#pm");$("#ps").textContent=S.logo?S.tagline:"STUDIOS";if(S.logo)$("#ps").classList.add("t");
+if(S.logo){pm.className="pre-mark lg";pm.innerHTML=`<img src="${url(S.logo)}" alt="">`}else pm.innerHTML=[..."SNAPEO"].map((c,i)=>`<span><b style="--i:${i}">${c}</b></span>`).join("");
+const t0=performance.now(),wait=ms=>new Promise(r=>setTimeout(r,ms)),imgs=[...document.querySelectorAll(".hero img")].filter(i=>!i.complete||!i.naturalWidth);
+Promise.race([Promise.all(imgs.map(i=>new Promise(r=>{i.addEventListener("load",r);i.addEventListener("error",r)}))),wait(4500)]).then(()=>wait(Math.max(0,3000-(performance.now()-t0)))).then(fin)})();
 </script></body></html>
