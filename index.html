@@ -12,6 +12,7 @@ const SNAPEO={
  tagline:"Wedding photography & films", email:"hello@snapeo.studio", instagram:"https://instagram.com/", phone:"+91 70178 89843", whatsapp:"917017889843",
  aboutText:["We limit weddings each season so every couple receives our best work. Photography and film come from one calm, small team.","Our approach is simple: be present, stay quiet and let the day unfold. Replace this text with your own story."],
  heroNote:"Now booking weddings worldwide",   // small line under the buttons: edit or leave "" to hide
+ heroBgMobile:"https://drive.google.com/file/d/1t518Z7uRhU9Kw8UbFz1-rzW1LPPSeO1l/view",   // hero photo on phones (a tall photo of the couple works best)
  heroBg:"https://drive.google.com/file/d/1QmKJ3v-JPTd4FtjBy7IwebDY1kNPImaJ/view",   // full-screen background behind the top of the home page, nav bar included
  hero:["https://drive.google.com/file/d/1yad5uppXKRdsU7_yk9Ch0nfC5_ZHpFtv/view", "https://drive.google.com/file/d/1t518Z7uRhU9Kw8UbFz1-rzW1LPPSeO1l/view", "https://drive.google.com/file/d/1dZSSAoTA_r9Jy5e0tggCG9f49Xhsc0R2/view"],                 // 3 arch photos at the top
  intro:{portrait:"https://drive.google.com/file/d/1cTnxUpkmTN9BybQ-P-ZUs4u96B3EaMZp/view", wide:"https://drive.google.com/file/d/1cBrmT9J8lguc6r7NMEdUgd2nhzQn88we/view"},    // two photos beside the intro text
@@ -230,6 +231,44 @@ body:not(.ready) .hero h1,body:not(.ready) .hero p,body:not(.ready) .hero .cta2,
 @media(prefers-reduced-motion:reduce){#pre{display:none}}
 .pre-sub.t{padding-left:.3em;font-size:.7rem;animation-name:subt}@keyframes subt{from{opacity:0;letter-spacing:.9em}to{opacity:1;letter-spacing:.32em}}
 .logo img{height:36px;width:auto;display:block}
+/* THEME PRELOADER */
+#pre{background:radial-gradient(60% 50% at 18% 12%,rgba(230,223,240,.9),transparent 70%),radial-gradient(60% 50% at 88% 92%,rgba(244,223,219,.95),transparent 70%),var(--bg)}
+#pre .orb{display:none}
+.pre-arch{display:flex;align-items:flex-end;justify-content:center;gap:9px;height:124px;margin-bottom:30px}
+.pre-arch i{display:block;width:clamp(36px,9vw,54px);height:0;border-radius:999px 999px 0 0;animation:ar 1.4s cubic-bezier(.2,.8,.2,1) forwards}
+.pre-arch i:nth-child(1){background:var(--blush);--h:76px;animation-delay:.1s}.pre-arch i:nth-child(2){background:var(--sage);--h:118px;animation-delay:.3s}.pre-arch i:nth-child(3){background:var(--lilac);--h:76px;animation-delay:.5s}
+@keyframes ar{to{height:var(--h)}}
+/* PLACEHOLDER WATERMARK */
+.wm{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-style:normal;text-align:center;pointer-events:none;color:rgba(59,47,52,.36);transition:opacity .8s;z-index:1}
+.wm b{font:400 clamp(.78rem,1.5vw,1.15rem) 'Italiana',var(--serif);letter-spacing:.34em;padding-left:.34em}
+.wm small{font:300 .5rem var(--sans);letter-spacing:.6em;padding-left:.6em;margin-top:6px}
+.ph img.l~.wm{opacity:0}.hbg .wm{display:none}
+/* HERO */
+.hbg>div{position:absolute;inset:0}.hbg .hm{display:none}
+.hbg::after{background:linear-gradient(90deg,rgba(251,245,241,.88) 0%,rgba(251,245,241,.6) 42%,rgba(251,245,241,.12) 100%),linear-gradient(180deg,transparent 72%,var(--bg))}
+@media(max-width:860px){
+.hbg .hd{display:none}.hbg .hm{display:block}
+.hero{padding:0;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end}
+.hero .wrap{display:block;min-height:0;width:100%;padding-top:120px;padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))}
+.hero .arches,.hero .note{display:none}
+.hbg::after{background:linear-gradient(180deg,rgba(251,245,241,.62) 0%,rgba(251,245,241,0) 20%,rgba(251,245,241,0) 34%,rgba(251,245,241,.7) 54%,rgba(251,245,241,.92) 72%,var(--bg) 100%)}
+.hero h1{font-size:clamp(2.7rem,12.5vw,3.7rem)}
+.hero p{font-size:.98rem;line-height:1.6;margin-top:14px;opacity:.92}
+.cta2{flex-wrap:nowrap;gap:10px;margin-top:22px}
+.cta2 .btn{flex:1 1 0;min-width:0;padding:14px 8px;font-size:.76rem;letter-spacing:.06em;white-space:nowrap;text-align:center}
+}
+/* AWARDS FILM REEL */
+.aw{overflow:hidden}
+.apt{width:60px;height:60px;display:block;margin:26px auto 0;animation:spin 24s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.reel{position:relative;overflow:hidden;background:var(--ink);padding:34px 0;margin:34px calc(-1*clamp(20px,6vw,96px)) 44px;transform:rotate(-1.4deg)}
+.reel::before,.reel::after{content:"";position:absolute;left:0;right:0;height:12px;background:repeating-linear-gradient(90deg,transparent 0 9px,var(--bg) 9px 24px,transparent 24px 34px);opacity:.9}.reel::before{top:11px}.reel::after{bottom:11px}
+.reel-t{display:flex;gap:12px;width:max-content;animation:roll 42s linear infinite}.reel:hover .reel-t{animation-play-state:paused}
+@keyframes roll{to{transform:translateX(-50%)}}
+.fr{position:relative;flex:none;width:clamp(210px,26vw,300px);aspect-ratio:4/3;background:var(--c);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:26px 16px 18px;color:var(--ink)}
+.fr b{font:italic 300 clamp(1.4rem,2.2vw,1.9rem)/1.15 var(--serif)}.fr small{margin-top:8px;font:400 .72rem var(--sans);letter-spacing:.2em;text-transform:uppercase;opacity:.7}
+.fr i{position:absolute;top:8px;left:12px;font:500 .55rem var(--sans);letter-spacing:.14em;font-style:normal;opacity:.5}
+@media(max-width:860px){.reel{padding:30px 0;margin-bottom:36px}.fr{width:62vw}}
+@media(prefers-reduced-motion:reduce){.reel-t,.apt{animation:none}}
 </style></head><body class="loading"><i id="sp"></i>
 <div id="pre" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><div class="pre-in"><div class="pre-mark" id="pm"></div><div class="pre-sub" id="ps"></div><i class="pre-line"></i></div></div>
 <header id="hd"><a class="logo" href="#home" id="lg"></a><button class="burger" id="bg" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
@@ -240,7 +279,7 @@ body:not(.ready) .hero h1,body:not(.ready) .hero p,body:not(.ready) .hero .cta2,
 <script>
 const RQ=[],S=SNAPEO,wa=t=>`https://wa.me/${S.whatsapp}?text=${encodeURIComponent(t)}`,$=s=>document.querySelector(s),H=[350,100,210,50,280,20,160];
 const url=u=>{if(!u)return"";const m=u.match(/drive\.google\.com.*?(?:\/d\/|id=)([\w-]+)/);return m?`https://lh3.googleusercontent.com/d/${m[1]}=w1800`:u};
-const ph=(u,i,t,x="",st="")=>{u=url(u);return`<div class="ph ${x}" style="--h:${H[i%7]};${st}">${u?`<img loading="lazy" alt="${t}" src="${u}" onload="this.classList.add('l')" onerror="this.remove()">`:`<span>${t}</span>`}</div>`};
+const ph=(u,i,t,x="",st="")=>{u=url(u);return`<div class="ph ${x}" style="--h:${H[i%7]};${st}">${u?`<img loading="lazy" alt="${t}" src="${u}" onload="this.classList.add('l')" onerror="this.remove()">`:""}<em class="wm"><b>SNAPEO</b><small>STUDIOS</small></em></div>`};
 const emb=u=>{let m;if(m=u.match(/(?:youtu\.be\/|v=|embed\/)([\w-]{11})/))return`<iframe allow="autoplay;fullscreen" allowfullscreen src="https://www.youtube.com/embed/${m[1]}?autoplay=1"></iframe>`;
 if(m=u.match(/vimeo\.com\/(\d+)/))return`<iframe allow="autoplay;fullscreen" allowfullscreen src="https://player.vimeo.com/video/${m[1]}?autoplay=1"></iframe>`;
 if(m=u.match(/drive\.google\.com.*?\/d\/([\w-]+)/))return`<iframe allow="autoplay" allowfullscreen src="https://drive.google.com/file/d/${m[1]}/preview"></iframe>`;
@@ -250,13 +289,14 @@ const Wf=f=>`<svg class="wave" viewBox="0 0 1440 100" preserveAspectRatio="none"
 const T=t=>`<h1 style="font-size:clamp(2.6rem,7vw,6rem)">${t}</h1>`;
 const play=(v)=>v?`data-v="${v}"`:"";
 const V={
-home:()=>`<section class="hero"><div class="hbg">${ph(S.heroBg,3,"Hero background")}</div><div class="wrap"><div><h1>Soft light,<br><em>lasting</em> love</h1><p>Wedding photography and films for couples who want their day remembered the way it felt.</p><div class="cta2"><a class="btn solid" href="#contact">Check your date</a><a class="btn" href="#portfolio">View portfolio</a></div><small class="note">${S.heroNote}</small></div><div class="arches">${[0,1,2].map(i=>ph(S.hero[i],i,"Hero photo","arch rv")).join("")}</div></div></section>${W("#dde6d9").replace("<svg","<svg style='margin-top:-1px;transform:scaleY(-1)'")}
+home:()=>`<section class="hero"><div class="hbg"><div class="hd">${ph(S.heroBg,3,"Hero background")}</div><div class="hm">${ph(S.heroBgMobile||S.heroBg,3,"Hero background")}</div></div><div class="wrap"><div><h1>Soft light,<br><em>lasting</em> love</h1><p>Wedding photography and films for couples who want their day remembered the way it felt.</p><div class="cta2"><a class="btn solid" href="#contact">Check your date</a><a class="btn" href="#portfolio">View portfolio</a></div><small class="note">${S.heroNote}</small></div><div class="arches">${[0,1,2].map(i=>ph(S.hero[i],i,"Hero photo","arch rv")).join("")}</div></div></section>${W("#dde6d9").replace("<svg","<svg style='margin-top:-1px;transform:scaleY(-1)'")}
 <section class="intro"><div class="wrap sec" style="padding-block:60px 90px"><div>${ph(S.intro.portrait,1,"Portrait","rv")}</div><div class="c"><h2>A gentle approach to an <em>age-old</em> tradition</h2><p style="margin-top:24px">Snapeo Studios photographs weddings in natural light with calm direction. We shoot photography and film together so one quiet team covers every ritual, every glance and every in-between moment.</p><a class="btn" href="#about">Our approach</a></div>${ph(S.intro.wide,3,"Wide photo","rv")}</div></section>${W("#dde6d9")}
 <div class="mq"><div>${[...S.press,...S.press,...S.press,...S.press].map(p=>`<span>${p}</span>`).join("")}</div></div>
 <section class="sec"><h2 class="c" style="margin-bottom:50px">Frames we love</h2><div class="mos">${Array.from({length:14},(_,i)=>i==6?`<div class="t"><b>some of our most loved frames</b></div>`:ph(S.mosaic[i>6?i-1:i],i,"Photo","rv")).join("")}</div></section>
 <section class="wrap" style="padding-bottom:110px"><div class="sto">${S.stories.map((s,i)=>`<a href="#portfolio"><div>${ph(s.img,i,s.title,"rv")}</div><h3>${s.title}</h3><small>${s.date}</small></a>`).join("")}</div><div class="c"><a class="btn" href="#portfolio">Photography blog</a></div></section>
 <section class="cin">${ph(S.cinema.img,4,"Cinematic still","","")}<div><h2>Soul <em>&</em> Cinema</h2><p>Every wedding is unique and so are our films. We tell your story with real sound, real faces and the pace of your day.</p>${S.cinema.video?`<a class="btn" style="color:var(--ink);border-color:var(--ink)" href="#" data-v="${S.cinema.video}">Watch showreel</a>`:`<a class="btn" style="color:var(--ink);border-color:var(--ink)" href="#films">See our films</a>`}</div></section>
-<section class="aw sec wrap c" style="margin-top:-60px;padding-top:150px"><h2>Award-winning films</h2><div class="lau">${S.awards.map(a=>`<div>${a.t}<small>${a.s}</small></div>`).join("")}</div><div class="two" style="text-align:left">${S.films.map((f,i)=>`<div class="fm" ${play(f.video)}>${ph(f.thumb,i+2,"Film still").replace("</div>",`<div class="pl"><i></i></div></div>`)}<h3>${f.title}</h3><small style="color:var(--mute)">${f.place}</small></div>`).join("")}</div><a class="btn" href="#films">Watch all our films</a></section>
+<section class="aw sec wrap c" style="margin-top:-60px;padding-top:150px"><h2>Award-winning films</h2><svg class="apt" viewBox="0 0 64 64" fill="none" stroke="#9c5f65" stroke-width="1.3" aria-hidden="true"><circle cx="32" cy="32" r="27"/><circle cx="32" cy="32" r="8"/>${[0,1,2,3,4,5].map(i=>`<path transform="rotate(${i*60} 32 32)" d="M32 5 L49 36"/>`).join("")}</svg>
+<div class="reel" aria-label="Awards"><div class="reel-t">${(()=>{const a=S.awards,h=[];while(h.length<6)h.push(...a);const f=(x,i)=>`<div class="fr" style="--c:${["var(--blush)","var(--sage)","var(--sky)","var(--butter)","var(--lilac)"][i%5]}"><i>SNAPEO 400 · ${10+i%24}A</i><b>${x.t}</b><small>${x.s}</small></div>`;return[...h,...h].map(f).join("")})()}</div></div><div class="two" style="text-align:left">${S.films.map((f,i)=>`<div class="fm" ${play(f.video)}>${ph(f.thumb,i+2,"Film still").replace("</div>",`<div class="pl"><i></i></div></div>`)}<h3>${f.title}</h3><small style="color:var(--mute)">${f.place}</small></div>`).join("")}</div><a class="btn" href="#films">Watch all our films</a></section>
 <section class="sec wrap c"><h2>Selected weddings</h2><p>A few recent celebrations, from intimate ceremonies to week-long destination weddings.</p><div class="wd">${S.weddings.map((w,i)=>`<div ${play(w.video)} style="cursor:pointer">${ph(w.thumb,i,w.title).replace("</div>",`<div class="nm"><span>${w.title}</span><small style="font:400 .74rem var(--sans);letter-spacing:.18em;text-transform:uppercase;margin-top:8px">${w.place}</small></div></div>`)}</div>`).join("")}</div></section>
 <section class="pr sec wrap c"><h2>As seen in</h2><p style="margin-top:14px">${S.press.join("  ·  ")}</p></section>
 <section class="ctab">${ph(S.cta,6,"Closing photograph")}<div><h2>Your day, <em>beautifully</em> kept</h2><p style="margin:20px auto;color:var(--ink)">Tell us your date and we will tell you if we are free.</p><a class="btn" href="#contact">Enquire now</a></div></section>`,
@@ -298,9 +338,9 @@ addEventListener("hashchange",()=>wd.classList.remove("o"));
 addEventListener("hashchange",route);route();
 (function(){const pre=$("#pre"),B=document.body;let seen=0;try{seen=sessionStorage.getItem("sn_seen")}catch(e){}
 const fin=()=>{pre.classList.add("out");B.classList.remove("loading");B.classList.add("ready");try{sessionStorage.setItem("sn_seen","1")}catch(e){}setTimeout(()=>{RQ.splice(0).forEach(f=>f());},500);setTimeout(()=>pre.remove(),1500)};
-if(seen||matchMedia("(prefers-reduced-motion:reduce)").matches){pre.remove();B.classList.remove("loading");B.classList.add("ready");RQ.splice(0).forEach(f=>f());return}
+if(matchMedia("(prefers-reduced-motion:reduce)").matches){pre.remove();B.classList.remove("loading");B.classList.add("ready");RQ.splice(0).forEach(f=>f());return}
 const pm=$("#pm");$("#ps").textContent=S.logo?S.tagline:"STUDIOS";if(S.logo)$("#ps").classList.add("t");
 if(S.logo){pm.className="pre-mark lg";pm.innerHTML=`<img src="${url(S.logo)}" alt="">`}else pm.innerHTML=[..."SNAPEO"].map((c,i)=>`<span><b style="--i:${i}">${c}</b></span>`).join("");
-const t0=performance.now(),wait=ms=>new Promise(r=>setTimeout(r,ms)),imgs=[...document.querySelectorAll(".hero img")].filter(i=>!i.complete||!i.naturalWidth);
+const t0=performance.now(),wait=ms=>new Promise(r=>setTimeout(r,ms)),imgs=[...document.querySelectorAll(".hero img")].filter(i=>i.offsetParent&&(!i.complete||!i.naturalWidth));
 Promise.race([Promise.all(imgs.map(i=>new Promise(r=>{i.addEventListener("load",r);i.addEventListener("error",r)}))),wait(4500)]).then(()=>wait(Math.max(0,3000-(performance.now()-t0)))).then(fin)})();
 </script></body></html>
