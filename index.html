@@ -278,6 +278,15 @@ body:not(.ready) .hero h1,body:not(.ready) .hero p,body:not(.ready) .hero .cta2,
 .two.three{grid-template-columns:repeat(3,1fr)}.wd.three{grid-template-columns:repeat(3,1fr)}.wd.three .ph{aspect-ratio:3/4;border-radius:200px 200px 24px 24px}
 .fm small{display:block;margin-top:2px}
 @media(max-width:860px){.two.three,.wd.three{grid-template-columns:1fr}.wd.three .ph{aspect-ratio:4/3;border-radius:120px 20px 20px 20px}}
+/* LOGO LOADER */
+.ph::before{animation:none}
+.ph:has(img:not(.l))::after{display:none!important}
+.wm{opacity:0;animation:wz 2.4s ease-in-out .35s infinite backwards}
+.wm.lg{background:var(--logo) center/min(58%,210px) auto no-repeat}
+.ph img{transition:opacity .7s ease,transform 1.5s cubic-bezier(.2,.7,.2,1)}
+.ph img.l~.wm{animation:none;opacity:0;visibility:hidden}
+@keyframes wz{0%{opacity:0;transform:scale(.78)}42%{opacity:.62;transform:scale(1.08)}100%{opacity:0;transform:scale(.78)}}
+@media(prefers-reduced-motion:reduce){.wm{animation:none;opacity:.4}}
 </style></head><body class="loading"><i id="sp"></i>
 <div id="pre" aria-hidden="true"><i class="orb o1"></i><i class="orb o2"></i><div class="pre-in"><div class="pre-mark" id="pm"></div><div class="pre-sub" id="ps"></div><i class="pre-line"></i></div></div>
 <header id="hd"><a class="logo" href="#home" id="lg"></a><button class="burger" id="bg" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
